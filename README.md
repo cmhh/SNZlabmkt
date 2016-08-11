@@ -7,7 +7,7 @@ application.
 Originally downloaded from:
 
 [CSV files for Infoshare subjects - Income and work](http://www.stats.govt.nz/tools_and_services/releases_csv_files/csv-files-for-infoshare.aspx)
-[Labour Market Statistics: March 2016 quarter](http://www.stats.govt.nz/~/media/Statistics/Browse%20for%20stats/LabourMarketStatistics/HOTPMar16qtr/Zipped%20csv%20tables.zip)
+[Labour Market Statistics: March 2016 quarter](http://www.stats.govt.nz/~/media/Statistics/Browse%20for%20stats/LabourMarketStatistics/HOTPMar16qtr/lms-mar16-zipped-csv-tables.zip)
 
 ## Installation
 

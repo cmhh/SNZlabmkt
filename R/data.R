@@ -15,7 +15,7 @@
 #'   \item{units}{Unit (NZD, index, number, or percentage).}
 #'   \item{magnitude}{Series has been multiplied by 10^(-magnitude) from original.}
 #' }
-#' @source \url{http://www.stats.govt.nz/~/media/Statistics/Browse%20for%20stats/LabourMarketStatistics/HOTPMar16qtr/Zipped%20csv%20tables.zip}
+#' @source \url{http://www.stats.govt.nz/~/media/Statistics/Browse%20for%20stats/LabourMarketStatistics/HOTPMar16qtr/lms-mar16-zipped-csv-tables.zip}
 "metadata"
 
 #' Statistics New Zealand Labour Market Time Series (March 2016)
@@ -29,5 +29,5 @@
 #'   \item{value}{Time series value.}
 #'   \item{status}{Status--final, provisional, or revised.}
 #' }
-#' @source \url{http://www.stats.govt.nz/~/media/Statistics/Browse%20for%20stats/LabourMarketStatistics/HOTPMar16qtr/Zipped%20csv%20tables.zip}
+#' @source \url{http://www.stats.govt.nz/~/media/Statistics/Browse%20for%20stats/LabourMarketStatistics/HOTPMar16qtr/lms-mar16-zipped-csv-tables.zip}
 "labmkt"
