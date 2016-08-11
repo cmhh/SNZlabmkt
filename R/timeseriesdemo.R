@@ -150,12 +150,7 @@ timeseriesdemo <- function(){
          output$plot <- renderPlot({
             req(input$units, plotdata())
             pd <- copy(plotdata())
-            foo <- function(dte=1987.12){
-               d <- strsplit(as.character(dte), '.', fixed=TRUE)[[1]]
-               as.numeric(d[1]) + (as.numeric(d[2])/3 - 1)/12
-            }
-            pd[,date:=sapply(period, foo)]
-            ggplot(pd[units==input$units], aes(date, value)) + geom_line(aes(color=ref)) + ylab(input$units)
+            ggplot(pd[units==input$units], aes(period, value)) + geom_line(aes(color=ref)) + ylab(input$units)
          })
 
          output$data <- DT::renderDataTable({
