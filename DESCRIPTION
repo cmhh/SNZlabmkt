@@ -1,7 +1,7 @@
 Package: SNZlabmkt
 Type: Package
 Title: New Zealand Labour Market Statistics
-Version: 0.1.1
+Version: 0.1.2
 Author: Chris Hansen
 Maintainer: Chris Hansen <cmhhansen@outlook.com>
 Description: Repackage of labour market time series data provided by Statistics New Zealand, and a demo shiny application.
