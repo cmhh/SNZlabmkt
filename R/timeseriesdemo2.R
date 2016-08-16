@@ -147,7 +147,9 @@ timeseriesdemo2 <- function(){
          output$plot <- renderPlot({
             req(input$units, plotdata())
             pd <- copy(plotdata())
-            ggplot(pd[units==input$units], aes(period, value)) + geom_line(aes(color=ref)) + ylab(input$units)
+            ggplot(pd[units==input$units], aes(period, value)) +
+               geom_line(aes(color=ref)) + ylab(input$units) +
+               theme(legend.position="bottom")
          })
 
          output$data <- DT::renderDataTable({
