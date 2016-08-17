@@ -11,32 +11,30 @@
 #' }
 timeseriesdemo <- function(){
 
+   pkg <- path.package("SNZlabmkt")
+   addResourcePath('www', paste0(pkg, "/www/www"))
+
    shinyApp(
 
-      ui = fluidPage(
-         titlePanel("Labour Market Time Series Explorer"),
-         sidebarLayout(
-            sidebarPanel(width=5,
-               selectInput("subject", "Subject:",
-                           choices=c("Household Labour Force Survey"="HLF",
-                                     "Labour Cost Index"="LCI",
-                                     "Quarterly Employment Survey"="QES")),
-               uiOutput("groupcontainer"),
-               uiOutput("title1container"),
-               uiOutput("title2container"),
-               uiOutput("title3container"),
-               uiOutput("title4container"),
-               uiOutput("title5container"),
-               uiOutput("unitscontainer")
-            ),
-            mainPanel(width=7,
-               tabsetPanel(
-                  tabPanel("Plot", plotOutput("plot", height="100%")),
-                  tabPanel("Data", div(DT::dataTableOutput("data")), style="padding: 10px;"),
-                  tags$head(includeCSS(paste0(path.package("SNZlabmkt"), "/www/styles.css")))))
-                  #tags$head(includeCSS("inst/www/styles.css"))))
-         )
+      ui = htmlTemplate(paste0(pkg, "/www/index.html"),
+         controls=wellPanel(
+            selectInput("subject", "Subject:",
+               choices=c("Household Labour Force Survey"="HLF",
+                         "Labour Cost Index"="LCI",
+                         "Quarterly Employment Survey"="QES")),
+            uiOutput("groupcontainer"),
+            uiOutput("title1container"),
+            uiOutput("title2container"),
+            uiOutput("title3container"),
+            uiOutput("title4container"),
+            uiOutput("title5container"),
+            uiOutput("unitscontainer"),
+            numericInput("limit", "series limit", 5, min=1, max=15)
+         ),
+         plot=highchartOutput("plot", height="650px", width="100%"),
+         tab=div(DT::dataTableOutput("data")), style="padding: 0 10px 0 10px; margin-top: 0; "
       ),
+
       server = function(input, output){
 
          sessionvars <- reactiveValues(meta=NULL)
@@ -138,7 +136,9 @@ timeseriesdemo <- function(){
          plotdata <- reactive({
             res <- merge(sessionvars$meta, labmkt, by="ref", all=FALSE)
             res[,value:=value * 10^magnitude]
-            res[,c("ref", "status", "group", paste0("title", 1:ntitle()), "period", "value", "units", "status"), with=FALSE]
+            res[,c("ref", "period", "group",
+                   paste0("title", 1:ntitle()), "value", "units", "status"),
+                with=FALSE]
          })
 
          output$unitscontainer <- renderUI({
@@ -147,12 +147,28 @@ timeseriesdemo <- function(){
             selectInput("units", "Units:", choices=choices)
          })
 
-         output$plot <- renderPlot({
-            req(input$units, plotdata())
-            pd <- copy(plotdata())
-            ggplot(pd[units==input$units], aes(period, value)) +
-               geom_line(aes(color=ref)) + ylab(input$units) +
-               theme(legend.position="bottom")
+         plotseries <- function(x, limit=5){
+            p <- highchart() %>%
+               hc_plotOptions(series = list(marker = list(enabled = FALSE))) %>%
+               hc_chart(zoomType="xy",
+                        resetZoomButton=list(
+                           position=list(align="right", verticalAlign="bottom", x=0, y=0))) %>%
+               hc_xAxis(categories = x$period) %>%
+               hc_credits(enabled = TRUE, text = "source: Statistics New Zealand",
+                      href = "http://www.stats.govt.nz") %>%
+               hc_tooltip(crosshairs = TRUE, shared = FALSE, borderWidth = 3) %>%
+               hc_exporting(enabled = TRUE)
+            s <- unique(x[,ref])
+            if (length(s)>limit) s <- s[1:limit]
+            for (i in s)
+               p <- p %>% hc_add_series(name=i, data=x[ref==i, value], type="line")
+            p
+         }
+
+         output$plot <- renderHighchart({
+            req(input$units, input$limit, plotdata())
+            assign('pd', plotdata()[units==input$units], envir=.GlobalEnv)
+            plotseries(plotdata()[units==input$units], limit=input$limit)
          })
 
          output$data <- DT::renderDataTable({
@@ -161,5 +177,4 @@ timeseriesdemo <- function(){
          }, rownames=FALSE, options=list())
 
       }, onStart=NULL, options=list(), uiPattern="/")
-
 }
