@@ -50,18 +50,18 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
                 <ul class="nav navbar-nav">
-                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#plot">Time Series Data</a>
+                        <a class="page-scroll" href="#tsplot">Plot</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#table">Table</a>
                     </li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
     </nav>
 
     <!-- header -->
@@ -82,14 +82,28 @@
     </header>
 
     <!-- slider + plot -->
-    <section id="plot" class="content-section text-center download-section">
+    <section id="tsplot" class="content-section text-center download-section"
+       style="padding: 20px 0 0 0;">
          <div class="container">
          <div class="row">
-				<div class="col-sm-8 pull-right wow fadeInRightBig">
+            <div class="col-sm-4" style="padding: 0; margin: 0;">
+               {{ controls }}
+				</div>
+				<div class="col-sm-8">
                {{ plot }}
             </div>
-            <div class="col-sm-4 wow fadeInLeftBig"  data-animation-delay="200">
-               {{ controls }}
+         </div>
+         </div>
+    </section>
+
+    <!-- table -->
+    <section id="table" class="content-section text-center download-section"
+       style="padding: 10px 0 20px 0;">
+         <div class="container">
+         <div class="row">
+            <hr>
+            <div class="col-sm-12" style="padding: 0; margin: 0;">
+               {{ tab }}
 				</div>
          </div>
          </div>
