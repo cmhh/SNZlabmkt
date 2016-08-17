@@ -1,15 +1,15 @@
 Package: SNZlabmkt
 Type: Package
 Title: New Zealand Labour Market Statistics
-Version: 0.1.2
+Version: 0.1.3
 Author: Chris Hansen
 Maintainer: Chris Hansen <cmhhansen@outlook.com>
 Description: Repackage of labour market time series data provided by Statistics New Zealand, and a demo shiny application.
 License: What license is it under?
 LazyData: TRUE
 Depends:
-    ggplot2,
     shiny,
     DT,
-    data.table
+    data.table,
+    highcharter
 RoxygenNote: 5.0.1
